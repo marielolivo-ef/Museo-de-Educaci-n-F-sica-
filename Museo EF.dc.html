@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;}
+  ::selection{background:#C8A24B;color:#122019;}
+  @keyframes flow{to{stroke-dashoffset:-160;}}
+  [data-palette="coral"]{--brass:#E8735A;--brass-2:#F2977E;--kinetic:#4FA9C9;}
+  [data-palette="violeta"]{--brass:#9C85D9;--brass-2:#BBA6E8;--kinetic:#D9A85E;}
+  [data-motion="off"] .kinetic-trace{animation:none !important;}
+  @media (prefers-reduced-motion:reduce){.kinetic-trace{animation:none !important;}}
+</style>
+</helmet>
+
+<div data-palette="{{ paletteKey }}" data-motion="{{ motionAttr }}" style="--wall:#14161C;--wall-2:#1B1E27;--panel:#20242F;--line:#333846;--ivory:#F1EEE6;--ivory-dim:#C3C6CF;--muted:#8B90A0;--brass:#D98F4E;--brass-2:#F0B37E;--kinetic:#4FC4C4;background:var(--wall);color:var(--ivory);min-height:100dvh;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased;position:relative;overflow:hidden">
+
+<div style="position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.09" dangerouslySetInnerHTML="{{ bgArt }}"></div>
+
+<header style="position:sticky;top:0;z-index:5;background:linear-gradient(180deg,var(--wall),rgba(18,32,25,.86));border-bottom:1px solid var(--line);backdrop-filter:blur(6px)">
+  <div style="max-width:920px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:12px">
+    <img src="uploads/Gemini_Generated_Image_yfgxtoyfgxtoyfgx.png" alt="Logo Museo Virtual" style="width:38px;height:38px;flex:none;object-fit:contain"/>
+    <div>
+      <p style="font-family:'Space Mono',ui-monospace,monospace;font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--kinetic);margin:0 0 2px">Museo virtual</p>
+      <h1 style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;letter-spacing:.01em;margin:0;line-height:1.1">Historia de la Educación Física</h1>
+    </div>
+    <a href="#" onClick="{{ goHub }}" style="margin-left:auto;font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.08em;color:var(--muted);text-decoration:none;border:1px solid var(--line);border-radius:999px;padding:7px 13px;white-space:nowrap">Entrada</a>
+  </div>
+</header>
+
+<main style="position:relative;z-index:1;max-width:920px;margin:0 auto;padding:0 20px">
+
+<sc-if value="{{ isHub }}" hint-placeholder-val="{{ true }}">
+<section style="padding:54px 0 30px;text-align:center">
+  <p style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.28em;text-transform:uppercase;color:var(--brass);margin:0 0 18px">Recorrido inmersivo</p>
+  <h2 style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(34px,7vw,60px);line-height:1.02;letter-spacing:-.01em;margin:0 auto;max-width:14ch">La historia del <em style="font-style:italic;color:var(--brass)">movimiento</em>, sala por sala</h2>
+  <p style="max-width:52ch;margin:20px auto 0;color:var(--ivory-dim);font-size:16px;line-height:1.6">Un museo para recorrer en el aula. Coloca cada estación en un punto del salón y actívala acercando el teléfono a su etiqueta NFC. Cinco salas, del gimnasio griego a las aulas dominicanas.</p>
+</section>
+
+<div style="max-width:920px;margin:34px auto;height:44px">
+  <svg viewBox="0 0 900 44" style="width:100%;height:100%;display:block">
+    <path class="kinetic-trace" d="M10 22 C 160 4, 260 40, 420 20 S 740 6, 890 26" stroke="var(--kinetic)" stroke-width="2" fill="none" stroke-dasharray="6 10" style="animation:flow 6s linear infinite"></path>
+  </svg>
+</div>
+
+<nav style="display:flex;flex-direction:column;gap:14px;padding:6px 0 22px">
+  <sc-for list="{{ rooms }}" as="room" hint-placeholder-count="5">
+    <a href="{{ room.href }}" onClick="{{ room.onEnter }}" style="display:grid;grid-template-columns:64px 1fr auto;gap:18px;align-items:center;background:linear-gradient(180deg,var(--wall-2),var(--panel));border:1px solid var(--line);border-radius:14px;padding:18px 20px;text-decoration:none;color:inherit" style-hover="border-color:var(--brass);transform:translateY(-2px)">
+      <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:32px;color:var(--brass);line-height:1">{{ room.num }}</div>
+      <div>
+        <p style="font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--kinetic);margin:0 0 4px">{{ room.era }}</p>
+        <h3 style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:20px;margin:0 0 3px;line-height:1.15">{{ room.sala }}</h3>
+        <p style="margin:0;color:var(--muted);font-size:13px;line-height:1.4">{{ room.fechas }}</p>
+      </div>
+      <div style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;color:var(--muted);white-space:nowrap">Entrar →</div>
+    </a>
+  </sc-for>
+</nav>
+
+<section style="margin:14px 0 60px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:22px">
+  <h4 style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px;margin:0 0 4px">Enlaces para las etiquetas NFC</h4>
+  <p style="color:var(--muted);font-size:13px;margin:0 0 16px;line-height:1.5">Graba cada enlace en la etiqueta NFC de su estación. Al acercar el teléfono, se abrirá esa sala directamente — ideal para un recorrido inmersivo sin necesidad de buscar nada.</p>
+  <sc-for list="{{ rooms }}" as="room" hint-placeholder-count="5">
+    <div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid var(--line)">
+      <span style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;color:var(--brass);white-space:nowrap;min-width:58px">Sala {{ room.num }}</span>
+      <span style="font-family:'Space Mono',ui-monospace,monospace;font-size:11.5px;color:var(--ivory-dim);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1">{{ room.url }}</span>
+      <button onClick="{{ room.copy }}" style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;color:var(--wall);background:{{ room.copyBg }};border:none;border-radius:7px;padding:7px 11px;cursor:pointer;white-space:nowrap">{{ room.copyLabel }}</button>
+    </div>
+  </sc-for>
+</section>
+</sc-if>
+
+<sc-if value="{{ hasRoom }}" hint-placeholder-val="{{ false }}">
+<article style="padding:30px 0 40px">
+  <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;margin-bottom:8px">
+    <span style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.16em;color:var(--brass)">CAT. {{ room.num }}</span>
+    <span style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--kinetic)">{{ room.era }}</span>
+    <span style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;color:var(--muted);margin-left:auto">{{ room.fechas }}</span>
+  </div>
+  <h2 style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:clamp(30px,6vw,50px);line-height:1.04;letter-spacing:-.01em;margin:6px 0 0">{{ room.titulo }}</h2>
+
+  <div style="margin:26px 0;border:1px solid var(--line);border-radius:16px;overflow:hidden;position:relative;height:380px;background:var(--wall-2)">
+    <image-slot id="{{ room.coverId }}" shape="rect" placeholder="{{ room.coverPlaceholder }}"></image-slot>
+    <div style="position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.72) 0%,rgba(0,0,0,.15) 55%,transparent 80%);pointer-events:none"></div>
+    <div style="position:absolute;left:22px;bottom:18px;right:22px;pointer-events:none">
+      <p style="font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-2);margin:0 0 4px;text-shadow:0 1px 4px rgba(0,0,0,.6)">{{ room.era }} · {{ room.fechas }}</p>
+      <h3 style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:22px;margin:0;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.5)">{{ room.sala }}</h3>
+    </div>
+  </div>
+
+  <button onClick="{{ toggleVoice }}" style="display:inline-flex;align-items:center;gap:10px;font-family:'Inter',sans-serif;font-weight:600;font-size:14px;background:{{ voiceBg }};color:var(--wall);border:none;border-radius:999px;padding:11px 18px;cursor:pointer;margin-bottom:22px">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4z"></path></svg>
+    <span>{{ voiceLabel }}</span>
+  </button>
+
+  <div>
+    <sc-for list="{{ room.parrafos }}" as="p" hint-placeholder-count="3">
+      <p style="font-size:{{ p.size }};line-height:1.75;color:var(--ivory);margin:0 0 16px;max-width:64ch">{{ p.text }}</p>
+    </sc-for>
+  </div>
+
+  <div style="margin:30px 0;border-left:2px solid var(--line);padding-left:22px">
+    <h4 style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--kinetic);margin:0 0 16px">Línea de tiempo</h4>
+    <sc-for list="{{ room.timeline }}" as="t" hint-placeholder-count="4">
+      <div style="position:relative;padding:0 0 18px 4px">
+        <div style="position:absolute;left:-29px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--brass);border:2px solid var(--wall)"></div>
+        <div style="font-family:'Space Mono',ui-monospace,monospace;font-size:13px;color:var(--brass);font-weight:700">{{ t.year }}</div>
+        <div style="font-size:15px;color:var(--ivory-dim);margin-top:2px;line-height:1.45">{{ t.ev }}</div>
+      </div>
+    </sc-for>
+  </div>
+
+  <div style="margin:28px 0">
+    <h4 style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--kinetic);margin:0 0 14px">Galería · añade fotos de la sala real</h4>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px">
+      <div style="height:150px;border-radius:10px;overflow:hidden;border:1px solid var(--line)">
+        <image-slot id="{{ room.photoId1 }}" shape="rect" placeholder="Foto de la estación"></image-slot>
+      </div>
+      <div style="height:150px;border-radius:10px;overflow:hidden;border:1px solid var(--line)">
+        <image-slot id="{{ room.photoId2 }}" shape="rect" placeholder="Objeto o mural"></image-slot>
+      </div>
+    </div>
+  </div>
+
+  <sc-if value="{{ room.hasVideo }}" hint-placeholder-val="{{ false }}">
+    <div style="margin:28px 0">
+      <h4 style="font-family:'Space Mono',ui-monospace,monospace;font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--kinetic);margin:0 0 14px">Video</h4>
+      <div style="position:relative;padding-bottom:56.25%;height:0;border-radius:12px;overflow:hidden;border:1px solid var(--line)">
+        <iframe src="{{ room.video }}" allowfullscreen="{{ true }}" style="position:absolute;inset:0;width:100%;height:100%;border:0"></iframe>
+      </div>
+    </div>
+  </sc-if>
+
+  <div style="display:flex;gap:12px;margin:36px 0 10px">
+    <sc-if value="{{ room.prev }}" hint-placeholder-val="{{ false }}">
+      <a href="{{ room.prevHref }}" onClick="{{ room.prevEnter }}" style="flex:1;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:14px 16px" style-hover="border-color:var(--brass)">
+        <div style="font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">← Sala anterior</div>
+        <div style="font-family:'Fraunces',Georgia,serif;font-size:16px;margin-top:3px;color:var(--ivory)">{{ room.prevSala }}</div>
+      </a>
+    </sc-if>
+    <sc-if value="{{ room.next }}" hint-placeholder-val="{{ false }}">
+      <a href="{{ room.nextHref }}" onClick="{{ room.nextEnter }}" style="flex:1;text-align:right;text-decoration:none;color:inherit;border:1px solid var(--line);border-radius:12px;padding:14px 16px" style-hover="border-color:var(--brass)">
+        <div style="font-family:'Space Mono',ui-monospace,monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)">Sala siguiente →</div>
+        <div style="font-family:'Fraunces',Georgia,serif;font-size:16px;margin-top:3px;color:var(--ivory)">{{ room.nextSala }}</div>
+      </a>
+    </sc-if>
+  </div>
+</article>
+</sc-if>
+
+</main>
+
+<footer style="border-top:1px solid var(--line);padding:26px 0 40px;text-align:center;color:var(--muted);font-size:12px;font-family:'Space Mono',ui-monospace,monospace;letter-spacing:.06em">{{ footerText }}</footer>
+
+</div>
+
+<x-import component-from-global-scope="image-slot" from="./image-slot.js" hint-size="0,0" style="display:none"></x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{},&quot;paletteVariant&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Bronce y turquesa&quot;,&quot;options&quot;:[&quot;Bronce y turquesa&quot;,&quot;Coral y cian&quot;,&quot;Violeta museo&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Ambiente&quot;},&quot;reduceMotion&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Ambiente&quot;},&quot;autoNarrate&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Recorrido NFC&quot;}}">
+const ROOMS_DATA = [
+  {
+    id:"e1", num:"01", era:"Antigüedad", fechas:"≈ 3000 a.C. – 393 d.C.",
+    sala:"El cuerpo educado",
+    titulo:"El cuerpo educado en la Antigüedad",
+    parrafos:[
+      "Mucho antes de que existiera la palabra “deporte”, las grandes civilizaciones ya entendían que educar el cuerpo era educar a la persona. En China, la India y Egipto se practicaban formas de ejercicio ligadas a la salud, la guerra y lo espiritual.",
+      "Pero fue en la Antigua Grecia donde el movimiento se volvió parte central de la educación. En la palestra y el gimnasio, los jóvenes cultivaban la fuerza, la destreza y la belleza del cuerpo como camino hacia la areté: la excelencia. Los Juegos Olímpicos antiguos, celebrados en Olimpia desde el 776 a.C., coronaban ese ideal.",
+      "Roma heredó parte de esa cultura, aunque con un sentido más militar y utilitario. Con la caída del mundo clásico y la prohibición de los Juegos hacia el 393 d.C., aquella visión del cuerpo entró en una larga pausa."
+    ],
+    timeline:[
+      {year:"≈776 a.C.", ev:"Primeros Juegos Olímpicos registrados en Olimpia."},
+      {year:"s. V a.C.", ev:"Auge de la palestra y el gimnasio en la educación griega."},
+      {year:"s. II d.C.", ev:"Galeno escribe sobre el ejercicio y la salud."},
+      {year:"≈393 d.C.", ev:"Se prohíben los Juegos Olímpicos antiguos."}
+    ],
+    video:""
+  },
+  {
+    id:"e2", num:"02", era:"Edad Media y Renacimiento", fechas:"s. V – s. XVII",
+    sala:"Del olvido al renacer",
+    titulo:"Del olvido al renacer",
+    parrafos:[
+      "Durante buena parte de la Edad Media, la educación del cuerpo quedó en segundo plano frente a la vida espiritual. El ejercicio sobrevivió sobre todo en el entrenamiento de los caballeros y en los juegos populares.",
+      "El Renacimiento trajo una mirada nueva. Los humanistas recuperaron el ideal clásico de equilibrio entre cuerpo y mente. Vittorino da Feltre, en su escuela “La Casa Alegre”, incorporó el ejercicio físico a la formación de los jóvenes como algo esencial, no accesorio.",
+      "En 1569, el médico Girolamo Mercuriale publicó “De arte gymnastica”, considerada una de las primeras obras que estudia el ejercicio de forma sistemática. El cuerpo volvía, poco a poco, al centro de la educación."
+    ],
+    timeline:[
+      {year:"s. V–XIV", ev:"El ejercicio persiste en la formación caballeresca y los juegos populares."},
+      {year:"1378–1446", ev:"Vittorino da Feltre integra el ejercicio en la educación humanista."},
+      {year:"1569", ev:"Mercuriale publica “De arte gymnastica”."}
+    ],
+    video:""
+  },
+  {
+    id:"e3", num:"03", era:"Siglo XIX", fechas:"1793 – 1900",
+    sala:"Las grandes escuelas",
+    titulo:"Las grandes escuelas gimnásticas",
+    parrafos:[
+      "El siglo XIX es el nacimiento de la Educación Física moderna. En Europa surgieron “escuelas” que definieron formas distintas de entender el movimiento, y cuya influencia todavía sentimos hoy.",
+      "En Alemania, GutsMuths sentó las bases con su “Gymnastik für die Jugend” (1793), y Friedrich Ludwig Jahn impulsó el Turnen, una gimnasia de aparatos con sentido cívico. En Suecia, Per Henrik Ling creó una gimnasia analítica y correctiva, fundando en 1813 su instituto en Estocolmo. En Francia, Francisco Amorós llevó la gimnasia a la enseñanza pública.",
+      "Mientras tanto, en Inglaterra, educadores como Thomas Arnold convirtieron el deporte y el juego en herramientas de formación del carácter. De esa raíz nacería buena parte del deporte moderno."
+    ],
+    timeline:[
+      {year:"1793", ev:"GutsMuths publica “Gymnastik für die Jugend” (Alemania)."},
+      {year:"1811", ev:"Jahn abre el primer campo de gimnasia (Turnplatz) en Berlín."},
+      {year:"1813", ev:"Ling funda el Instituto Central de Gimnasia (Suecia)."},
+      {year:"1828–1841", ev:"Thomas Arnold impulsa el deporte educativo en Rugby (Inglaterra)."}
+    ],
+    video:""
+  },
+  {
+    id:"e4", num:"04", era:"Siglo XX", fechas:"1894 – 2000",
+    sala:"El siglo olímpico",
+    titulo:"El siglo olímpico",
+    parrafos:[
+      "En 1894, el pedagogo francés Pierre de Coubertin fundó el Comité Olímpico Internacional, y en 1896 se celebraron en Atenas los primeros Juegos Olímpicos modernos. El ideal antiguo renacía, ahora a escala mundial.",
+      "A lo largo del siglo XX, la Educación Física se institucionalizó: entró en los sistemas escolares de casi todos los países, se profesionalizó la formación de docentes y se desarrollaron las ciencias del movimiento —fisiología, biomecánica, pedagogía del deporte—.",
+      "La EF dejó de ser solo gimnasia para convertirse en un área educativa completa, orientada a la salud, la formación integral y la participación de todos, no solo de los atletas."
+    ],
+    timeline:[
+      {year:"1894", ev:"Coubertin funda el Comité Olímpico Internacional."},
+      {year:"1896", ev:"Primeros Juegos Olímpicos modernos, en Atenas."},
+      {year:"s. XX", ev:"La Educación Física se generaliza en los sistemas escolares."},
+      {year:"s. XX", ev:"Se consolidan las ciencias del movimiento (biomecánica, fisiología)."}
+    ],
+    video:""
+  },
+  {
+    id:"e5", num:"05", era:"El Caribe y RD", fechas:"1926 – hoy",
+    sala:"La EF en el Caribe y RD",
+    titulo:"La Educación Física en el Caribe y República Dominicana",
+    parrafos:[
+      "En América Latina y el Caribe, la Educación Física se afianzó a lo largo del siglo XX ligada a la escuela pública, a la salud y al orgullo deportivo regional. En 1926 se celebraron en México los primeros Juegos Centroamericanos y del Caribe, la competencia regional más antigua de su tipo.",
+      "En la República Dominicana, la Educación Física es hoy parte del currículo escolar y cuenta con instituciones dedicadas a su desarrollo y a la formación docente, como el INEFI. Generaciones de maestras y maestros han llevado el movimiento a las aulas de todo el país.",
+      "Esta historia sigue viva y en construcción: cada clase, cada evento y cada estudiante en movimiento es un nuevo capítulo. En 2026, Santo Domingo es sede de los XXV Juegos Centroamericanos y del Caribe, uniendo el legado antiguo con el presente dominicano."
+    ],
+    timeline:[
+      {year:"1926", ev:"Primeros Juegos Centroamericanos y del Caribe (Ciudad de México)."},
+      {year:"s. XX", ev:"La Educación Física entra al currículo escolar dominicano."},
+      {year:"Actual", ev:"El INEFI impulsa la EF y la formación docente en RD."},
+      {year:"2026", ev:"Santo Domingo, sede de los XXV Juegos Centroamericanos y del Caribe."}
+    ],
+    video:""
+  }
+];
+
+function bgArtHTML(){
+  const L="#D98F4E";
+  const column=(x)=>'<g transform="translate('+x+',0)" stroke="'+L+'" stroke-width="2" fill="none">'+
+    '<rect x="-30" y="40" width="60" height="10"/><rect x="-22" y="50" width="44" height="360"/>'+
+    '<line x1="-14" y1="50" x2="-14" y2="410"/><line x1="-2" y1="50" x2="-2" y2="410"/><line x1="10" y1="50" x2="10" y2="410"/>'+
+    '<rect x="-30" y="410" width="60" height="14"/></g>';
+  const figure=(x,y,s)=>'<g transform="translate('+x+','+y+') scale('+s+')" stroke="'+L+'" stroke-width="3" fill="none" stroke-linecap="round">'+
+    '<circle cx="0" cy="-40" r="10"/><line x1="0" y1="-30" x2="0" y2="10"/>'+
+    '<line x1="0" y1="-14" x2="-30" y2="-30"/><line x1="0" y1="-14" x2="34" y2="-4"/>'+
+    '<line x1="0" y1="10" x2="-22" y2="46"/><line x1="0" y1="10" x2="20" y2="48"/>'+
+    '<circle cx="40" cy="-8" r="7"/></g>';
+  const meander='<pattern id="mk" width="40" height="10" patternUnits="userSpaceOnUse">'+
+    '<path d="M0 10 L0 0 L10 0 L10 6 L20 6 L20 0 L30 0 L30 6 L40 6" stroke="'+L+'" stroke-width="1.6" fill="none"/></pattern>';
+  return '<svg viewBox="0 0 1200 900" preserveAspectRatio="xMidYMax slice" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block">'+
+    '<defs>'+meander+'</defs>'+
+    '<rect x="0" y="0" width="1200" height="10" fill="url(#mk)"/>'+
+    '<rect x="0" y="890" width="1200" height="10" fill="url(#mk)"/>'+
+    column(80)+column(1120)+
+    figure(560,520,2.2)+figure(760,600,-1.6)+
+    '</svg>';
+}
+
+class Component extends DCLogic {
+  state = { hash:"", copiedId:null, speaking:false };
+
+  componentDidMount(){
+    this._onHash = () => this.setState({ hash:(location.hash||"").slice(1) });
+    window.addEventListener("hashchange", this._onHash);
+    this._onHash();
+  }
+  componentWillUnmount(){
+    window.removeEventListener("hashchange", this._onHash);
+    if(window.speechSynthesis) speechSynthesis.cancel();
+  }
+  componentDidUpdate(prevProps, prevState){
+    if(prevState.hash !== this.state.hash){
+      if(window.speechSynthesis) speechSynthesis.cancel();
+      this.setState({ speaking:false });
+      if(this.props.autoNarrate){
+        const room = ROOMS_DATA.find(r=>r.id===this.state.hash);
+        if(room) setTimeout(()=>this.speak(room), 500);
+      }
+    }
+  }
+
+  goTo(id){ location.hash = "#"+id; }
+
+  copy(url, id){
+    const done = () => {
+      this.setState({ copiedId:id });
+      setTimeout(()=>this.setState(s=> s.copiedId===id ? { copiedId:null } : null), 1400);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(done).catch(done);
+    } else done();
+  }
+
+  pickVoice(){
+    if(!window.speechSynthesis) return null;
+    const vs = speechSynthesis.getVoices();
+    return vs.find(v=>/es(-|_)?(DO|MX|US|ES|419)/i.test(v.lang)) || vs.find(v=>/^es/i.test(v.lang)) || null;
+  }
+
+  speak(room){
+    if(!window.speechSynthesis) return;
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(room.parrafos.join(" "));
+    u.lang = "es-ES"; u.rate = .96; u.pitch = 1;
+    const v = this.pickVoice(); if(v) u.voice = v;
+    u.onend = () => this.setState({ speaking:false });
+    this.setState({ speaking:true });
+    speechSynthesis.speak(u);
+  }
+
+  toggleVoice(room){
+    if(this.state.speaking){
+      if(window.speechSynthesis) speechSynthesis.cancel();
+      this.setState({ speaking:false });
+    } else {
+      this.speak(room);
+    }
+  }
+
+  renderVals(){
+    const hash = this.state.hash;
+    const current = ROOMS_DATA.find(r=>r.id===hash);
+    const isHub = !current;
+    const base = (typeof location!=="undefined") ? location.origin+location.pathname : "";
+
+    const paletteMap = { "Bronce y turquesa":"bronce", "Coral y cian":"coral", "Violeta museo":"violeta" };
+    const paletteKey = paletteMap[this.props.paletteVariant] || "bronce";
+    const motionAttr = this.props.reduceMotion ? "off" : "on";
+
+    const rooms = ROOMS_DATA.map(r=>({
+      id:r.id, num:r.num, era:r.era, sala:r.sala, fechas:r.fechas,
+      href:"#"+r.id, url: base+"#"+r.id,
+      onEnter:(e)=>{ e.preventDefault(); this.goTo(r.id); },
+      copy:()=>this.copy(base+"#"+r.id, r.id),
+      copyLabel: this.state.copiedId===r.id ? "¡Copiado!" : "Copiar",
+      copyBg: this.state.copiedId===r.id ? "var(--kinetic)" : "var(--brass)"
+    }));
+
+    let roomVals = null;
+    if(current){
+      const i = ROOMS_DATA.indexOf(current);
+      const prev = ROOMS_DATA[i-1], next = ROOMS_DATA[i+1];
+      const coverHints = {
+        e1:"Foto: friso o estatua de atletas griegos",
+        e2:"Foto: grabado o pintura de gimnasia renacentista",
+        e3:"Foto: gimnasio con aparatos, s. XIX",
+        e4:"Foto: Juegos Olímpicos, s. XX",
+        e5:"Foto: clase de Educación Física en RD"
+      };
+      roomVals = {
+        num: current.num, era: current.era, fechas: current.fechas, titulo: current.titulo, sala: current.sala,
+        coverId: current.id+"-cover", coverPlaceholder: coverHints[current.id],
+        parrafos: current.parrafos.map((t,idx)=>({ text:t, size: idx===0 ? "19px" : "16.5px" })),
+        timeline: current.timeline,
+        photoId1: current.id+"-foto-1", photoId2: current.id+"-foto-2",
+        hasVideo: !!current.video, video: current.video,
+        prev: !!prev, prevHref: prev ? "#"+prev.id : "", prevSala: prev ? prev.sala : "",
+        prevEnter: prev ? (e)=>{ e.preventDefault(); this.goTo(prev.id); } : null,
+        next: !!next, nextHref: next ? "#"+next.id : "", nextSala: next ? next.sala : "",
+        nextEnter: next ? (e)=>{ e.preventDefault(); this.goTo(next.id); } : null
+      };
+    }
+
+    return {
+      isHub, hasRoom: !isHub, rooms, room: roomVals,
+      paletteKey, motionAttr, bgArt: { __html: bgArtHTML() },
+      goHub: (e)=>{ e.preventDefault(); location.hash = ""; },
+      toggleVoice: () => current && this.toggleVoice(current),
+      voiceLabel: this.state.speaking ? "Detener" : "Escuchar la sala",
+      voiceBg: this.state.speaking ? "var(--kinetic)" : "var(--brass)",
+      footerText: isHub ? "Museo de la Historia de la Educación Física · recorrido de aula" : ("Sala "+current.num+" · "+current.sala)
+    };
+  }
+}
+</script>
+</body>
+</html>
